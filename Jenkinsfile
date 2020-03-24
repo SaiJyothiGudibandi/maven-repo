@@ -12,6 +12,8 @@ pipeline {
       }
       stage('Build') {
          steps {
+		 def str = "Hello world"
+		 println(str)
             // Run Maven on a Unix agent.
 		 sh "${params.build_cmd}"
 
