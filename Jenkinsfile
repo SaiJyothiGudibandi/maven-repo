@@ -12,8 +12,7 @@ pipeline {
       }
       stage('Build') {
          steps {
-		 def str = "Hello world"
-		 println(str)
+		
             // Run Maven on a Unix agent.
 		 sh "${params.build_cmd}"
 
@@ -42,7 +41,13 @@ pipeline {
    }
 	  post {
     always {
-      echo 'always runs regardless of the completion status of the Pipeline run'
+	    script {
+        def result = currentBuild.result
+        if (result == null) {
+          result = "SUCCESS"
+        }
+      }
+     // echo 'always runs regardless of the completion status of the Pipeline run'
     }
     success {
       echo 'step will run only if the build is successful'
